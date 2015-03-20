@@ -1,10 +1,9 @@
 <div id="SensoresCtrl" data-ng-controller="SensoresCtrl">
     <div ng-repeat="(key, value) in pageResult">
-        <!-- {{key}} - {{value.parsedData}} <br /><br /><br /><br /><hr> -->
         <div class="col-md-6 sensores">
             <table class="table">
-               <div id="gauge_{{pageResult[key].deviceNumber}}"></div>
-                <caption>{{pageResult[key].location}} <button class="btn btn-default details-btn" title="Show details" data-toggle="modal" data-target=".detail_{{pageResult[key].deviceNumber}}"><spam class="glyphicon glyphicon-search"></spam></button></caption>
+               <div id="gauge_{{pageResult[key].deviceNumber}}"><div class="modal_button"><button class="btn btn-default details-btn" title="Show details" data-toggle="modal" data-target=".detail_{{pageResult[key].deviceNumber}}"><spam class="glyphicon glyphicon-search"></spam></button></div></div>
+                <!--<caption>{{pageResult[key].location}} <button class="btn btn-default details-btn" title="Show details" data-toggle="modal" data-target=".detail_{{pageResult[key].deviceNumber}}"><spam class="glyphicon glyphicon-search"></spam></button></caption>-->
                 <tbody>
                     <tr>
                         <th>Horário</th>
@@ -60,7 +59,8 @@
 </div>
 
 <script>
-  var g = function(gauge_value, idName, sensorType) {
+  var g = function(gauge_value, idName, sensorType, sensorTitle) {
+      sensorTitle = typeof sensorTitle !== 'undefined' ? sensorTitle : 'Temepratura';
       if ($('#' +idName).hasClass('processed')) {
           return;
       }
@@ -73,7 +73,7 @@
             value:gauge_value,
             min: 20,
             max: 35,
-            title: "Temperatura",
+            title: sensorTitle,
             label: "Celcius"
           });
       } else {
@@ -82,7 +82,7 @@
             value:gauge_value,
             min: 10,
             max: 80,
-            title: "Humidade",
+            title: sensorTitle,
             label: "%"
           });
       }

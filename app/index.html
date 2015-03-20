@@ -8,6 +8,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel='stylesheet' href='bower_components/chartist/dist/chartist.min.css' />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -28,7 +29,7 @@
     <!-- Add your site or application content here -->
     <div class="header">
       <div class="navbar navbar-default" role="navigation">
-        <div class="container">
+        <div class="container" ng-controller="ActivepathCtrl">
           <div class="navbar-header">
 
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
@@ -45,9 +46,9 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
               <div class="base">
               <ul class="nav nav-pills">
-                <li role="presentation" class="base-title"><h3>Base</h3></li>
+                <li role="presentation" class="base-title" ><h3>Base</h3></li>
                 <li role="presentation" class="disabled"><a href="#">SP</a></li>
-                <li role="presentation" class="active"><a href="#">CPS</a></li>
+                <li role="presentation" ng-class="{active: baseIsActive('cps')}"><a href="#">CPS</a></li>
                 <li role="presentation" class="disabled"><a href="#">BH</a></li>
               </ul>
               </div>
@@ -55,10 +56,10 @@
               <ul class="nav nav-pills">
                 <li role="presentation" class="build-title"><h3>Prédio</h3></li>
                 <li role="presentation" class="disabled"><a href="#">09</a></li>
-                <li role="presentation"><a href="#/sensores/cps/12">12</a></li>
-                <li role="presentation"><a href="#/sensores/cps/16">16</a></li>
-                <li role="presentation" class="active"><a href="#/sensores/cps/23a">23A</a></li>
-                <li role="presentation"><a href="#/sensores/cps/23b">23B</a></li>
+                <li role="presentation" ng-class="{active: isActive('/sensores/cps/12')}"><a href="#/sensores/cps/12">12</a></li>
+                <li role="presentation" ng-class="{active: isActive('/sensores/cps/16')}"><a href="#/sensores/cps/16">16</a></li>
+                <li role="presentation" ng-class="{active: isActive('/sensores/cps/23a')}"><a href="#/sensores/cps/23a">23A</a></li>
+                <li role="presentation" ng-class="{active: isActive('/sensores/cps/23b')}"><a href="#/sensores/cps/23b">23B</a></li>
               </ul>
               </div>
           </div>
@@ -103,6 +104,7 @@
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/chartist/dist/chartist.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -111,6 +113,7 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/sensores.js"></script>
+        <script src="scripts/controllers/activepath.js"></script>
         <!-- endbuild -->
    </div>
 </body>
