@@ -34,5 +34,5 @@ angular
       })
       .otherwise({
         redirectTo: '/'
-      });console.log(route.indexOf($location.path()) > -1);
+      });
   });
