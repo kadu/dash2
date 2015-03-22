@@ -84,7 +84,10 @@ angular.module('dashApp')
                 if ($scope.pageResult.length === 0) {
                     $scope.pageResult.push($scope.sensors[value.key]);
                     setTimeout(function () {
+                      try {
                         g($scope.sensors[value.key].data[0].body.data.Temperature, 'gauge_' + $scope.sensors[value.key].deviceNumber, 'temperature', $scope.sensors[value.key].location);
+                      }
+                      catch (err) {}
                     }, 2000);
                 }
                 else {
@@ -97,7 +100,10 @@ angular.module('dashApp')
                     if (!controla) {
                         $scope.pageResult.push($scope.sensors[value.key]);
                         setTimeout(function () {
+                          try {
                             g($scope.sensors[value.key].data[0].body.data.Temperature, 'gauge_' + $scope.sensors[value.key].deviceNumber, 'temperature', $scope.sensors[value.key].location);
+                          }
+                          catch (err) {}
                         }, 2000);
                     }
                 }
