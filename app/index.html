@@ -65,7 +65,7 @@
               <ul class="nav nav-pills">
                 <li role="presentation" class="base-title" ><h3>Base</h3></li>
                 <li role="presentation" class="disabled"><a href="#">SP</a></li>
-                <li role="presentation" ng-class="{active: baseIsActive('cps')}"><a href="#">CPS</a></li>
+                <li role="presentation" ng-class="{active: baseIsActive('cps')}"><a href="#/sensores/cps/23b">CPS</a></li>
                 <li role="presentation" class="disabled"><a href="#">BH</a></li>
               </ul>
               </div>
@@ -82,6 +82,7 @@
             </div>
           </div>
         </div>
+      </div>
 
         <div class="container main-content">
         <div class="row">
@@ -98,8 +99,6 @@
             </ul>
           </div>
         </div>
-
-    </div>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -135,8 +134,11 @@
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/sensores.js"></script>
         <script src="scripts/controllers/activepath.js"></script>
+        <script src="scripts/controllers/status.js"></script>
+        <script src="scripts/services/mysensors.js"></script>
         <!-- endbuild -->
     <div class="body-background hot"></div>
     <div class="body-background cold"></div>
+    </div>
 </body>
 </html>

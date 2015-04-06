@@ -8,7 +8,7 @@
  * Controller of the dashApp
  */
 angular.module('dashApp')
-    .controller('SensoresCtrl', function ($scope, $location, $http) {
+    .controller('SensoresCtrl', function ($scope, $location, $http, mySensors) {
         var devices = [];
         var baseURL = 'http://ciot.kadu.com.br/v1/device/@device_id/streams/@last?token=@token';
         var d = new Date();
@@ -17,11 +17,7 @@ angular.module('dashApp')
         $scope.devices = [];
         $scope.path = $location.path().split('/').pop();
         $scope.pageResult = [];
-        $scope.getData = function (date) {
-            var daux = date.split('T')[0];
-            var taux = date.split('T')[1].split('.')[0];
-            return daux + '|' + taux;
-        };
+
         var transformUrl = function (id, token, fullHistory) {
             var new_url = baseURL.replace('@device_id', id);
             new_url = new_url.replace('@token', token);
@@ -33,27 +29,41 @@ angular.module('dashApp')
         };
 
         var structuredValues = { Temperature: 0, Humidity: 0};
-        var structuredData   = { ten : { Temperature: 0, Humidity: 0}, twelve  : { Temperature: 0, Humidity: 0}, fourteen: { Temperature: 0, Humidity: 0}};
 
-        $scope.sensors = [{location: '23a - Terreo',    deviceGroup: '23a', deviceNumber: 13,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/terreo'},
-                          {location: '23a - 1o. Piso',  deviceGroup: '23a', deviceNumber: 14,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/1piso'},
-                          {location: '23a - 2o. Piso',  deviceGroup: '23a', deviceNumber: 15,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/2piso'},
-                          {location: '23b - Terreo',    deviceGroup: '23b', deviceNumber: 16,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/terreo'},
-                          {location: '23b - Gefin',     deviceGroup: '23b', deviceNumber: 17,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/gefin'},
-                          {location: '23b - 1o. Piso',  deviceGroup: '23b', deviceNumber: 18,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/1piso'},
-                          {location: '23b - Garagem',   deviceGroup: '23b', deviceNumber: 23, deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/garagem'},
-                          {location: '16 - Processos',  deviceGroup: '16',  deviceNumber: 19,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/16/corredor1'},
-                          {location: '16 - Prox. copa', deviceGroup: '16',  deviceNumber: 20,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/16/corredor2'},
-                          {location: '12 - Bayer',      deviceGroup: '12',  deviceNumber: 21,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/12/corredor1'},
-                          {location: '12 - Walmart',    deviceGroup: '12',  deviceNumber: 22, deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/12/corredor2'}
+
+        $scope.sensors = mySensors.all();
+
+/*
+        $scope.sensors = [{location: '23a - 2o. Piso',  label: 1, deviceGroup: '23a', deviceNumber: 13,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/terreo'},
+                          {location: '23a - 1o. Piso',  label: 2, deviceGroup: '23a', deviceNumber: 14,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/1piso'},
+                          {location: '23a - Terreo',    label: 3, deviceGroup: '23a', deviceNumber: 15,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23a/2piso'},
+                          {location: '23b - Genfin',    label: 6, deviceGroup: '23b', deviceNumber: 21,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/terreo'},
+                          {location: '23b - Terreo',    label: 5, deviceGroup: '23b', deviceNumber: 17,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/gefin'},
+                          {location: '23b - 1o. Piso',  label: 4, deviceGroup: '23b', deviceNumber: 16,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/1piso'},
+                          {location: '23b - Garagem',   label: 1, deviceGroup: '23b', deviceNumber: 23,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/23b/garagem'},
+                          {location: '16 - Processos',  label: 7, deviceGroup: '16',  deviceNumber: 19,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/16/corredor1'},
+                          {location: '16 - Prox. copa', label: 8, deviceGroup: '16',  deviceNumber: 20,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/16/corredor2'},
+                          {location: '12 - Bayer',      label: 9, deviceGroup: '12',  deviceNumber: 18,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/12/corredor1'},
+                          {location: '12 - Walmart',    label: 10, deviceGroup: '12', deviceNumber: 22,  deviceToken: 'czwTqPsYgEbYoNmEwyhmgQ', data: [], parsedData: structuredData, detailPath: '/cps/12/corredor2'}
             ];
+*/
+
+        $scope.sensors_status = function () {
+          console.log("tasdeste");
+          $.each($scope.sensors, function (key, value) {
+            var urlAux = transformUrl(value.deviceNumber, value.deviceToken, false);
+            $http.get(urlAux).then(function(data, status, headers, config) {
+              console.log(data);
+            });
+          });
+        }
 
         var coverDataParser = function (data, sensorKey) {
             var dados = data;
             var parsedAux = { ten : { Temperature: 0, Humidity: 0}, twelve  : { Temperature: 0, Humidity: 0}, fourteen: { Temperature: 0, Humidity: 0}};;
 
             $.each(dados, function (chave, valor) {
-                var dtaux = $scope.getData(valor.created_at);
+                var dtaux = mySensors.getData(valor.created_at);
                 var date_aux = dtaux.split('|')[0];
                 var time_aux = dtaux.split('|')[1];
                 var swithaux = parseInt(time_aux.split(":")[0]);
@@ -87,7 +97,7 @@ angular.module('dashApp')
                       try {
                         g($scope.sensors[value.key].data[0].body.data.Temperature, 'gauge_' + $scope.sensors[value.key].deviceNumber, 'temperature', $scope.sensors[value.key].location);
                       }
-                      catch (err) {}
+                      catch (errx) {}
                     }, 2000);
                 }
                 else {
@@ -110,6 +120,9 @@ angular.module('dashApp')
             });
             setTimeout(function () {
                 $('svg').find('text:first').find('tspan').each(function (k, v) {
+                   $(v).attr('class','sensores title');
+                });
+                $('svg').find('text:first').next().each(function (k, v) {
                    $(v).attr('class','sensores title');
                 });
             },2500);

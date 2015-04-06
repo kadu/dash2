@@ -1,0 +1,28 @@
+<div data-ng-controller="StatusCtrl">
+  <div class="col-md-12 col-sm-6 sensores">
+    <table class="table">
+      <thead>
+          <tr>
+              <th>Location</th>
+              <th>Label</th>
+              <th>CIOT Number</th>
+              <th>Hardware Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr ng-repeat="(key, value) in statusResult">
+              <td>{{statusResult[key].location}}</td>
+              <td>{{statusResult[key].label}}</td>
+              <td>{{statusResult[key].deviceNumber}}</td>
+              <td>{{statusResult[key].HwName}}</td>
+              <td>{{statusResult[key].lastDate}}</td>
+              <td>{{statusResult[key].lastTime}}</td>
+              <td class="{{statusResult[key].status}}"></td>
+          </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

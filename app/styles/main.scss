@@ -12,6 +12,9 @@ a {
   -moz-border-radius: 0;
   border-radius: 0;  border-radius: 0;
   color: #FFF;
+  position: absolute;
+  top: 0;
+  right: 16px;
 }
 .sensor_details {
     display: none;
@@ -56,6 +59,8 @@ body {
 .footer {
   padding-left: 15px;
   padding-right: 15px;
+  position: relative;
+  z-index: 1;
 }
 
 /* Custom page header */
@@ -201,6 +206,12 @@ body {
 .main-content {
   background-color: rgba(0, 0, 0, 0.2);
   padding: 30px;
+  position: relative;
+  z-index: 1;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 
@@ -220,7 +231,7 @@ body {
         tbody tr td,
         tfoot tr th,
         tfoot tr td {
-           border: none !important;
+          border: none !important;
         }
 
         tbody tr {
@@ -245,6 +256,7 @@ body {
     .title {
       text-align: center;
       color: #FFF;
+      fill: #FFF;
       font-size: 35px;
       font-family: 'Raleway', sans-serif;
     }
@@ -278,6 +290,10 @@ caption {
   }
 }
 @media screen and (max-width: 767px) {
+sensores
+  .sensores .title {
+    font-size: 20px;
+  }
   .navbar-default {
     .navbar-collapse {
       position: relative;
