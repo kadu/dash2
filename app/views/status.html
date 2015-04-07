@@ -9,6 +9,8 @@
               <th>Hardware Name</th>
               <th>Date</th>
               <th>Time</th>
+              <th>Temperatura</th>
+              <th>Humidade</th>
               <th>Status</th>
           </tr>
       </thead>
@@ -20,6 +22,8 @@
               <td>{{statusResult[key].HwName}}</td>
               <td>{{statusResult[key].lastDate}}</td>
               <td>{{statusResult[key].lastTime}}</td>
+              <td>{{statusResult[key].temperature}}</td>
+              <td>{{statusResult[key].humidity}}</td>
               <td class="{{statusResult[key].status}}"></td>
           </tr>
       </tbody>
